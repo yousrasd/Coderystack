@@ -1,0 +1,15 @@
+{
+    "site": {
+        "title": "Coderystack",
+        "copyright": "© CoderyStack | 2024",
+        "logo": "/logo.svg",
+        "logo_dark": "/logo_dark.svg",
+        "logo_width": "197",
+        "logo_height": "31",
+        "logo_text": "Coderystack"
+    },
+    "settings": {
+        "pagination": 5,
+        "summary_length": 200
+    }
+}

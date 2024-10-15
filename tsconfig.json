@@ -1,0 +1,23 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "target": "es6",
+    "allowJs": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+    "isolatedModules": true,
+    "incremental": true,
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/components/*": ["./src/layouts/components/*"],
+      "@/*": ["./src/*"]
+    },
+    "jsxImportSource": "react",
+    "strictNullChecks": true
+  },
+  "include": ["**/*.ts", "**/*.tsx", "**/*.astro", "src/layouts/components/Post.js", "src/layouts/components/Post.js"],
+  "exclude": ["node_modules"]
+}

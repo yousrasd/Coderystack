@@ -1,0 +1,12 @@
+{
+    "home": {
+        "url": "/",
+        "translationKey": "nav.home",
+        "visible": true
+    },
+    "contact": {
+        "url": "/contact",
+        "translationKey": "nav.contact",
+        "visible": false
+    }
+}

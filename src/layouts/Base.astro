@@ -1,0 +1,85 @@
+---
+import { AstroFont } from "astro-font";
+import { ViewTransitions } from "astro:transitions";
+import { loadEnv } from "vite";
+
+import Header from "@/components/Header";
+import Footer from "@/components/Footer.astro";
+import GoogleAnalytics from "@/components/GoogleAnalytics.astro";
+
+import "@/styles/main.scss";
+import config from "@/config/config.json";
+
+export const prerender = true;
+
+const PUBLIC_GA_TRACKER_ID =
+  import.meta.env.PUBLIC_GA_TRACKER_ID || import.meta.env.GA_TRACKER_ID;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <title>{config.site.title}</title>
+    <ViewTransitions />
+
+    <AstroFont
+      config={[
+        {
+          src: [],
+          name: "Lato",
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap",
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+        },
+      ]}
+    />
+
+    <GoogleAnalytics measurementId={PUBLIC_GA_TRACKER_ID} />
+  </head>
+  <body class="flex flex-col min-h-screen dark:bg-dark-primary-bg-color">
+    <Header client:only="react" />
+    <main class="flex-grow px-main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+  
+  <script>
+    // get currently saved theme
+    const theme = (() => {
+      if (
+        typeof localStorage !== "undefined" &&
+        localStorage.getItem("theme")
+      ) {
+        return localStorage.getItem("theme") || "light";
+      }
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark";
+      }
+      return "light";
+    })();
+
+    // toggle the dark mode
+    if (theme === "light") {
+      document.documentElement.classList.remove("dark");
+    } else {
+      document.documentElement.classList.add("dark");
+    }
+    // save the theme
+    window.localStorage.setItem("theme", theme);
+  </script>
+</html>

@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --padding-main: 2rem;
+  
+}
+
+//customize the default font used
+@layer base {
+  body {
+    @apply text-gray-600
+  }
+}
+
+.p-main {
+  padding: var(--padding-main);
+}
+
+.px-main {
+  padding: var(--padding-main);
+}
+
+.markdown > * {
+  all: revert;
+}

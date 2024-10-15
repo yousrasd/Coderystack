@@ -1,0 +1,61 @@
+<section class="giscus mx-auto mt-10 w-full"></section>
+
+<script>
+  import { globalTheme as globalThemeConfig } from "@/store/themeStore";
+
+  globalThemeConfig.subscribe((newTheme) => {
+    changeGiscusTheme(newTheme);
+  });
+
+  function changeGiscusTheme(theme: string) {
+    function sendMessage(message: any) {
+      const iframe = document.querySelector(
+        "iframe.giscus-frame"
+      ) as HTMLIFrameElement;
+      if (!iframe || iframe.contentWindow == null) return;
+      iframe.contentWindow.postMessage(
+        { giscus: message },
+        "https://giscus.app"
+      );
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: theme == "dark" ? "dark" : "noborder_light",
+      },
+    });
+  }
+</script>
+
+<script>
+  document.addEventListener("astro:page-load", function () {
+    const currentPath = window.location.pathname;
+    if (!currentPath.startsWith("/posts/")) {
+      return;
+    }
+
+    const giscusAttributes = {
+      src: "https://giscus.app/client.js",
+      "data-repo": "yousrasd/Coderystack",
+      "data-repo-id": "R_kgDONAxArw",
+      "data-category": "Blog Post Comments",
+      "data-category-id": "DIC_kwDONAxAr84CjiHM",
+      "data-mapping": "url",
+      "data-strict": "0",
+      "data-reactions-enabled": "1",
+      "data-emit-metadata": "0",
+      "data-input-position": "bottom",
+      "data-theme": localStorage.getItem("theme") == "dark" ? "dark" : "light",
+      "data-lang": "en",
+      crossorigin: "anonymous",
+      async: "",
+    };
+
+    const giscusScript = document.createElement("script");
+    Object.entries(giscusAttributes).forEach(([key, value]) =>
+      giscusScript.setAttribute(key, value)
+    );
+
+    document.body.appendChild(giscusScript);
+  });
+</script>

@@ -1,0 +1,48 @@
+---
+// Rendered when a post is clicked
+
+export const prerender = true;
+
+import Base from "@/layouts/Base.astro";
+import { getSinglePage } from "@/utils/contentParser.astro";
+import Post from "@/components/Post";
+import PostComments from "@/components/PostComments.astro";
+
+export async function getStaticPaths() {
+  const posts = await getSinglePage("posts" as any);
+
+  const paths = posts.map((post: any) => ({
+    params: {
+      single: post.slug,
+    },
+    props: { post },
+  }));
+
+  return paths;
+}
+
+const { post } = Astro.props;
+---
+
+<Base>
+  <section class="flex">
+    <div class="flex flex-col items-center w-full">
+      {
+        (
+          <Post
+            post={{
+              id: post?.id,
+              slug: post?.slug,
+              body: post?.body,
+              showFullPost: true,
+              ...post?.data,
+            }}
+            client:idle
+          />
+        )
+      }
+
+      <PostComments />
+    </div>
+  </section>
+</Base>
