@@ -1,0 +1,32 @@
+---
+// Rendered when a post is clicked
+
+export const prerender = true;
+
+import { getCollection } from "astro:content";
+import Base from "@/layouts/Base.astro";
+import { getPostsForCategory } from "@/utils/contentParser.astro";
+import Category from "@/components/categories/Category";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts" as any);
+
+  const allCategories = posts.flatMap((p: any) => p.data["categories"]) || [];
+  const categories = [...new Set(allCategories)];
+
+  const paths = categories.map((category: any) => ({
+    params: { single: category },
+    props: { category },
+  }));
+  return paths;
+}
+
+const { category } = Astro.props;
+
+const posts = await getPostsForCategory(category);
+
+---
+
+<Base>
+  <Category category={category} posts={posts} />
+</Base>

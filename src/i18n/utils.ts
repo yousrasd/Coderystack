@@ -6,7 +6,20 @@ export function getLangFromUrl(url: URL) {
   return defaultLang;
 }
 
-export function useTranslations(lang: keyof typeof translations) {
+export function useTranslations(
+  lang: keyof typeof translations,
+  variable?: string
+) {
+  if (variable) {
+    return function t(key: keyof (typeof translations)[typeof defaultLang]) {
+      return (
+        // @ts-ignore
+        translations[lang][key](variable) ||
+        // @ts-ignore
+        translations[defaultLang][key](variable)
+      );
+    };
+  }
   return function t(key: keyof (typeof translations)[typeof defaultLang]) {
     return translations[lang][key] || translations[defaultLang][key];
   };

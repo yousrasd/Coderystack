@@ -4,13 +4,33 @@ import {
   type CollectionEntry,
   type CollectionKey,
 } from "astro:content";
+import { sortByDate } from "./strings";
+import type { PostProps } from "@/components/Post";
 
 export const getSinglePage = async <C extends CollectionKey>(
-  collectionName: C,
+  collectionName: C
 ): Promise<CollectionEntry<C>[]> => {
   const allPages = await getCollection(collectionName);
   const removeIndex = allPages.filter((data) => data.id.match(/^(?!-)/));
   const removeDrafts = removeIndex.filter((data) => !data.data.draft);
   return removeDrafts;
+};
+
+export const getPostsForCategory = async <C extends CollectionKey>(
+  category: string
+): Promise<PostProps[]> => {
+  const posts = sortByDate(await getSinglePage("posts"));
+
+  return posts
+    .filter((p: any) =>
+      p?.data?.categories?.some((c: string) => c === category)
+    )
+    .map((p: any) => ({
+      id: p.id,
+      slug: p.slug,
+      body: p.body,
+      showFullPost: false,
+      ...p.data,
+    }));
 };
 ---

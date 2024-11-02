@@ -1,6 +1,7 @@
 ---
 title: "My awesome 11 blog post"
 authors: ["John Doe"]
+image: "/post/post-1.png"
 date: 2019-11-17T05:00:00Z
 description: "This is meta description"
 categories: ["Development Tools", "Hugo"]

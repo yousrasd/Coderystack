@@ -1,13 +1,13 @@
 ---
 title: "My awesome 12 blog post"
-image: "/images/post/post-1.png"
+image: "/post/post-1.png"
 authors: ["John Doe"]
 date: 2019-11-18T05:00:00Z
 description: "This is meta description"
 categories: ["Development Tools", "Hugo"]
 type: "post"
 embededCodeLanguage: "java"
-draft: true
+draft: false
 ---
 Lorem markdownum meam potestas ovantem, Aeneia, partim loqui venenis numina
 praebebatque. Haec instructo, **Avernae** habendum Messenia orbem: currere

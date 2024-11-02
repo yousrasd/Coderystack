@@ -9,7 +9,7 @@
         "logo_text": "Coderystack"
     },
     "settings": {
-        "pagination": 5,
+        "pagination": 6,
         "summary_length": 200
     }
 }

@@ -41,16 +41,17 @@ const currentPage = slug && !isNaN(Number(slug)) ? Number(slug) : 1;
 const postsSliceStart = (currentPage - 1) * paginationSize;
 const postsSliceEnd = postsSliceStart + paginationSize;
 const currentPosts = posts.slice(postsSliceStart, postsSliceEnd);
-
 ---
 
 <Base>
-  <section class="flex">
-    <div class="flex flex-col items-center w-full">
+  <section class="container mx-auto py-10 px-5 md:px-12 xl:px-48">
+    <div
+      class="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3"
+    >
       {
         currentPosts.map((post) => {
           return (
-            <div class="px-10 py-5 my-10 mx-auto w-full sm:w-4/5 lg:w-2/3 xl:w-1/2 shadow-xl rounded-md border border-gray-200">
+            <div class="justify-self-center my-8 rounded-lg shadow-lg shadow-gray-200 max-w-sm dark:shadow-gray-900 bg-white dark:bg-gray-800 duration-300 hover:scale-105">
               <Post
                 post={{
                   id: post.id,
@@ -65,11 +66,13 @@ const currentPosts = posts.slice(postsSliceStart, postsSliceEnd);
           );
         })
       }
-      {
-        totalPages > 1 && (
-          <Pagination paginationSize={totalPages} activePage={currentPage} />
-        )
-      }
     </div>
+    {
+      totalPages > 1 && (
+        <div class="flex flex-row justify-center">
+          <Pagination paginationSize={totalPages} activePage={currentPage} />
+        </div>
+      )
+    }
   </section>
 </Base>
