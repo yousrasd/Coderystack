@@ -10,7 +10,7 @@
 //customize the default font used
 @layer base {
   body {
-    @apply text-gray-600
+    @apply text-gray-700
   }
 }
 
@@ -24,4 +24,25 @@
 
 .markdown > * {
   all: revert;
+}
+
+.markdown p {
+  letter-spacing: 1.1px;
+}
+
+.markdown {
+  h1,h2 {
+    font-size: 1.3rem;
+  }
+
+  h3, h4, h5, h6 {
+    font-size: 1.2rem;
+  }
+}
+
+.markdown a {
+  text-decoration: underline;
+}
+.markdown a:hover {
+  color: theme("colors.primary-color");
 }

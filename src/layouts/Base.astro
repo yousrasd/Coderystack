@@ -45,12 +45,22 @@ const PUBLIC_GA_TRACKER_ID =
           selector: "body",
           fallback: "sans-serif",
         },
+        {
+          src: [],
+          name: "Raleway",
+          googleFontsURL:
+            "https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap",
+          preload: true,
+          display: "swap",
+          selector: "body",
+          fallback: "sans-serif",
+        },
       ]}
     />
 
     <GoogleAnalytics measurementId={PUBLIC_GA_TRACKER_ID} />
   </head>
-  <body class="flex flex-col min-h-screen dark:bg-dark-primary-bg-color">
+  <body class="flex flex-col min-h-screen dark:bg-dark-primary-bg-color xl:px-48">
     <Header client:only="react" />
     <main class="flex-grow px-main">
       <slot />

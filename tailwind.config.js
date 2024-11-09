@@ -14,7 +14,10 @@ export default {
 				'dark-primary-text-color': '#f3f6f4',
 				'dark-secondary-color': '',
 				'dark-tertiary-color': '',
- 			},
+			},
+			screens: {
+				'2xl': '1536px',
+			}
 
 		},
 		fontFamily: {

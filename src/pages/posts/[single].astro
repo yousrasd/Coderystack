@@ -22,27 +22,31 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
+const { Content } = await post.render()
 ---
 
 <Base>
   <section class="flex">
-    <div class="flex flex-col items-center w-full">
-      {
-        (
-          <Post
-            post={{
-              id: post?.id,
-              slug: post?.slug,
-              body: post?.body,
-              showFullPost: true,
-              ...post?.data,
-            }}
-            client:idle
-          />
-        )
-      }
+    <div>
+      <div class="flex flex-col  w-full markdown dark:text-white pb-8">
+        {
+            <Post
+              post={{
+                id: post?.id,
+                slug: post?.slug,
+                body: post?.body,
+                showFullPost: true,
+                ...post?.data,
+              }}
+              client:idle
+            />
+            <Content  />
 
-      <PostComments />
-    </div>
+        }
+
+      </div>
+    <PostComments />
+
+  </div>
   </section>
 </Base>

@@ -7,8 +7,10 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
   materialDark,
   materialLight,
+  solarizedlight,
 } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { useStore } from "@nanostores/react";
+import rehypeRaw from "rehype-raw";
 
 import config from "@/config/config.json";
 import { getLangFromUrl, useTranslations } from "@/i18n/utils";
@@ -73,33 +75,35 @@ const Post: React.FC<PostProps> = ({ post }) => {
   }
 
   return (
-    <div className="flex flex-col mb-8 border-border text-base px-10 my-10 mx-auto w-full sm:w-4/5 lg:w-2/3 xl:w-1/2">
+    <div className="flex flex-col mb-8 border-border text-base my-10 mx-auto w-full sm:w-4/5 lg:w-2/3 xl:w-4/5 2xl:w-3/5">
       <Header post={post} />
       <SocialShare postUrl={postUrl} />
-      <Markdown
+      {/* <Markdown
         className={
-          "text-lg dark:text-dark-primary-text-color  text-gray-500 markdown pt-5"
+          "text-base markdown dark:text-dark-primary-text-color  text-gray-900 pt-5"
         }
-        components={{
-          code({ children, ...props }) {
-            const style = theme === "dark" ? materialDark : materialLight;
+        rehypePlugins={[rehypeRaw]}
+        skipHtml={false}
+        // components={{
+        //   code({ children, ...props }) {
+        //     const style = theme === "dark" ? materialDark : solarizedlight;
 
-            return (
-              <SyntaxHighlighter
-                key={theme} // Trigger re-render on theme change
-                children={String(children).replace(/\n$/, "")}
-                language={post.embededCodeLanguage || "js"}
-                style={style}
-                {...props}
-              />
-            );
-          },
-        }}
+        //     return (
+        //       <SyntaxHighlighter
+        //         key={theme} // Trigger re-render on theme change
+        //         children={String(children).replace(/\n$/, "")}
+        //         language={post.embededCodeLanguage || "js"}
+        //         style={style}
+        //         {...props}
+        //       />
+        //     );
+        //   },
+        // }}
       >
         {post.showFullPost
           ? post.body
           : post.body.slice(0, config.settings.summary_length)}
-      </Markdown>
+      </Markdown> */}
     </div>
   );
 };
@@ -107,7 +111,10 @@ const Post: React.FC<PostProps> = ({ post }) => {
 export default Post;
 
 const Header = ({ post, showFullPost = true }) => (
-  <div key={post.id} className="flex flex-col h-full">
+  <div
+    key={post.id}
+    className="flex flex-col h-full justify-center items-center"
+  >
     {post && post?.image && !showFullPost && (
       <img
         src={post.image}
@@ -117,12 +124,12 @@ const Header = ({ post, showFullPost = true }) => (
     <h2
       className={`dark:text-white text-center ${
         !post.showFullPost && "hover:text-primary-color px-5"
-      } ${showFullPost ? "text-3xl" : "text-2xl"} pb-3`}
+      } ${showFullPost ? "text-2xl" : "text-xl"} pb-5`}
     >
       {post.title}
     </h2>
     {post && post?.image && showFullPost && (
-      <img src={post.image} className="pb-4" />
+      <img src={post.image} className="pb-4 max-w-md " />
     )}
 
     <ul className="flex flex-col items-center align-end pb-5 mt-auto">
