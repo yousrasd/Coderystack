@@ -1,0 +1,215 @@
+---
+title: "Kotlin Basics: Variables, Data Types, Control Flow, Functions"
+image: "/post/covers/Post2-KotlinBasics.png"
+authors: ["Yousra@Coderystack"]
+date: 2024-11-10T05:00:00Z
+description: "Part 2 in the series of tutorials on Kotlin"
+categories: ["kotlin"]
+type: "post"
+draft: false
+---
+
+import { Picture} from 'astro:assets';
+
+Welcome to the second part of the Kotlin tutorial series! 👋 In this tutorial, we will learn about Kotlin syntax, dive into variables 
+and data types and cover control flow and functions.
+
+Let's get started!
+
+&nbsp;
+
+## Basic Kotlin Structure
+Every Kotlin program starts with a **main** function. Think of it as the main door of a house; just like we need to open the door to enter
+a house, the programs begins by entering the main function.
+
+This main function is the starting point for every Kotlin program. All program logic must either reside in or be initiated from here.
+
+If we look at the first code that your wrote in the previous tutorial, 
+```java title="HelloWorld.kt"
+fun main() {
+    println("Hello World!")
+}
+```
+
+This the the main function. The Kotlin Interpreter looks for this function and starts program execution from here.
+
+&nbsp;
+
+
+## Kotlin Variables
+
+A variable is a placeholder for data that may either remain constant or change over time. Once declared, we can reassign a mutable variable to a new value as many times as needed.
+
+To declare a mutable (changeable) variable in Kotlin, we use the **var** keyword:
+
+```java title="VariableDeclarationVar.kt"
+var color = "blue"
+```
+
+
+In contrast, to declare an immutable (unchangeable) variable, we use the **val** keyword. This data cannot change after it's assigned.
+
+```java title="VariableDeclarationVal.kt"
+val color = "green"
+```
+
+With **val**, we can only use the assignment (=) operator once. 
+Attempting to assign a new value to a val variable will result in a compile-time error (an error that occurs during code compilation).
+
+<Picture src="/post/post2/valReassignment.png" alt="valReassignment" width="400" height="350"/>
+
+
+### Variables - Null assignment
+
+Both mutable and immutable variables can be assigned a **null** value, representing an absence of data or a "non-existent" value.
+
+```java title="VariableDeclarationVal.kt"
+var color: String? = null
+val month: String? = null
+```
+
+Note: In Kotlin, variables need to be explicitly marked as nullable (using ? after the type) to hold a null value. 
+Otherwise, a non-nullable variable will cause a compile-time error if you try to assign null to it.
+
+&nbsp;
+
+
+
+## Kotlin Data types
+
+Kotlin defines couple of data types that can be used to express the types of variables.
+
+We can define numbers whether whole or with decimal points, booleans, characters, strings and arrays.
+
+### Numbers
+
+Numbers in Kotlin can either be **whole numbers** or **floating-point numbers**.
+
+- To express a whole number, we can use **Byte**, **Short**, **Int**, or **Long**.
+- To represent a floating-point number, we use **Float** or **Double**.
+
+
+#### Byte
+Byte is used to resentent a single whole digit number that ranges from <span>**-128**</span> to <span>**127**</span>.
+
+```kotlin title="ByteDataType.kt"
+val byteNumber: Byte = 100
+
+```
+
+
+#### Short
+Short holds larger whole numbers than Byte. It occupies 16 bits and has a range of 
+<span>**-32,768**</span> to <span>**32,767**</span>.
+
+Example:
+
+```kotlin title="ShortDataType.kt"
+val shortValue: Short = 30000
+```
+
+#### Int
+Int is the most commonly used data type for whole numbers. It is 32 bits and can represent values 
+from <span>**-2,147,483,648**</span> to <span>**2,147,483,647**</span>.
+
+Example:
+
+```kotlin title="IntDataType.kt"
+val intValue: Int = 2_000_000
+```
+
+
+#### Long
+Long is used for extremely large whole numbers. It is 64 bits and supports values ranging from 
+<span>**-9,223,372,036,854,775,808**</span> to <span>**9,223,372,036,854,775,807**</span>.
+When using Long, the number must end with an L.
+
+Example:
+
+```kotlin title="LongDataType.kt"
+val longValue: Long = 9_223_372_036_854_775_807L
+```
+
+
+#### Float
+Float is used for floating-point numbers and occupies 32 bits.
+It provides precision for up to 7 significant decimal digits and is typically used when memory is a concern.
+To define a Float, append F to the value.
+
+Example:
+```kotlin title="FloatDataType.kt"
+val floatValue: Float = 3.14F
+```
+
+#### Double
+Double is the default for floating-point numbers and occupies 64 bits.
+It provides precision for up to 15–16 significant decimal digits and is ideal for precise calculations.
+
+Example:
+```kotlin title="DoubleDataType.kt"
+val doubleValue: Double = 2.718281828459045
+```
+
+<br/>
+**Note:** Inserting a number outside the range of a specific type results in a compile-time error. 
+For example, trying to assign a number larger than 127 to a Byte variable will produce a compile-time error.
+
+<Picture src="/post/post2/byteWrongNumberRange.png" alt="byteRange" width="500" height="350"/>
+
+
+<br/>
+<br/>
+
+### Booleans
+Booleans are used to represent logical values, typically true or false.   
+
+For example:
+
+```kotlin title="BooleanDataType.kt"
+val isKotlinFun: Boolean = true
+val isOlderThan18: Boolean = false
+```
+
+<br/>
+<br/>
+
+### Characters
+Characters are used to represent a single digit number or letter or special character. 
+
+For example:
+
+```kotlin title="CharacterDataType.kt"
+val letter = "a"
+```
+
+<br/>
+<br/>
+
+### Strings
+Strings are used to represent a sequence of characters, which can include letters, digits and special characters. 
+
+For example:
+```kotlin title="StringDataType.kt"
+val color = "blue"
+val orderNumber = "5"
+```
+
+<br/>
+<br/>
+
+### Arrays
+Arrays are a data structure used to store multiple variables within a single variable.
+
+
+&nbsp;
+
+
+## Kotlin Control Flow
+
+&nbsp;
+
+
+## Kotlin Functions
+
+&nbsp;
+

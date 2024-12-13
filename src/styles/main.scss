@@ -32,10 +32,18 @@
 
 .markdown {
   h1,h2 {
+    font-size: 1.5rem;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  h3 {
+    margin-bottom: 0;
     font-size: 1.3rem;
   }
 
-  h3, h4, h5, h6 {
+  h4, h5, h6 {
+    margin-bottom: 0;
     font-size: 1.2rem;
   }
 }
@@ -46,3 +54,19 @@
 .markdown a:hover {
   color: theme("colors.primary-color");
 }
+
+.mainColor {
+  color: theme("colors.primary-color");
+}
+
+.try-it-section {
+  background: linear-gradient(120deg, #f5f7fa, #c3cfe2); /* Soft gradient */
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.try-it-section h4 {
+  font-family: 'Courier New', Courier, monospace; 
+  color: theme("colors.primary-color"); 
+}
+

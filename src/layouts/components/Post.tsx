@@ -66,7 +66,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
   if (!post.showFullPost) {
     return (
       <a
-        className="flex rounded-lg border-border text-base mx-auto   h-full"
+        className="flex rounded-lg border-border text-base mx-auto h-full"
         href={`/posts/${post.slug}`}
       >
         <Header post={post} showFullPost={post.showFullPost} />
@@ -78,32 +78,6 @@ const Post: React.FC<PostProps> = ({ post }) => {
     <div className="flex flex-col mb-8 border-border text-base my-10 mx-auto w-full sm:w-4/5 lg:w-2/3 xl:w-4/5 2xl:w-3/5">
       <Header post={post} />
       <SocialShare postUrl={postUrl} />
-      {/* <Markdown
-        className={
-          "text-base markdown dark:text-dark-primary-text-color  text-gray-900 pt-5"
-        }
-        rehypePlugins={[rehypeRaw]}
-        skipHtml={false}
-        // components={{
-        //   code({ children, ...props }) {
-        //     const style = theme === "dark" ? materialDark : solarizedlight;
-
-        //     return (
-        //       <SyntaxHighlighter
-        //         key={theme} // Trigger re-render on theme change
-        //         children={String(children).replace(/\n$/, "")}
-        //         language={post.embededCodeLanguage || "js"}
-        //         style={style}
-        //         {...props}
-        //       />
-        //     );
-        //   },
-        // }}
-      >
-        {post.showFullPost
-          ? post.body
-          : post.body.slice(0, config.settings.summary_length)}
-      </Markdown> */}
     </div>
   );
 };
@@ -113,7 +87,7 @@ export default Post;
 const Header = ({ post, showFullPost = true }) => (
   <div
     key={post.id}
-    className="flex flex-col h-full justify-center items-center"
+    className="flex flex-col h-full w-full justify-center items-center"
   >
     {post && post?.image && !showFullPost && (
       <img
