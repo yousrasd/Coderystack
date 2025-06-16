@@ -20,6 +20,9 @@ export async function getStaticPaths() {
   }));
   return paths;
 }
+  const currentPath = Astro.url.pathname;
+
+console.log('currentPath :>> ', currentPath);
 
 const { category } = Astro.props;
 

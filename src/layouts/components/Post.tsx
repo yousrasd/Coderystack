@@ -41,6 +41,7 @@ export interface PostProps {
     categories: Array<string>;
     tags: Array<string>;
     draft?: Boolean;
+    showInDevMode?: Boolean;
     showFullPost: Boolean;
     embededCodeLanguage?: string;
   };

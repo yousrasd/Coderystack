@@ -13,6 +13,9 @@ export const getSinglePage = async <C extends CollectionKey>(
   const allPages = await getCollection(collectionName);
   const removeIndex = allPages.filter((data) => data.id.match(/^(?!-)/));
   const removeDrafts = removeIndex.filter((data) => !data.data.draft);
+  // const currentPath = Astro.url.pathname;
+  // console.log('currentPath :>> ', Astro.url);
+  
   return removeDrafts;
 };
 

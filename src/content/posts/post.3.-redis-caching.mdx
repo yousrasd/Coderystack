@@ -1,0 +1,135 @@
+---
+title: "Avoiding Stale Data: Redis Caching Gotchas and the Right Way to Use Pipelines"
+image: "/post/covers/Post3-RedisCaching.png"
+authors: ["Yousra@Coderystack"]
+date: 2025-06-15T05:00:00Z
+description: "Prevent stale data in Redis: how to use Redis pipelines and transactions effectively when using redis as caching layer"
+categories: ["redis", "caching", "server"]
+type: "post"
+draft: false
+showInDevMode: true
+---
+
+Caching data with Redis can lead to stale data if the right operations aren't used carefully. 
+
+## What is Redis?
+For those unfamiliar, Redis is an open-source, in-memory data structure store used as a database, cache, and message broker. It supports data structures such as strings, hashes, lists, sets, and more.
+
+Its most appealing feature is speed—Redis keeps data in memory, making it incredibly fast for reads and writes. It's a popular choice for caching data that needs to be accessed quickly and frequently.
+
+ 
+
+## Redis Gotchas
+One of redis operation HSET doesnt allow you to setup an expiry directly. Once has to invoke a second operation expire in 
+order to setup a TTL for the cache. 
+
+Gotchas: calling HSET then EXPIRE commands without a transaction could lead to stale data if for example EXPIRE command fails
+while the HSET successeds.
+
+HSET is dependent on the EXPIRE command to clear up the cache in order to sync it with new data by reinvoking the backend.
+
+=> If EXPIRE were to fail, the cached data would reside in the cache forever and would become stale. If any application
+is dependent on that, we run into the possiblity of rendering outdated information.
+
+```python
+import redis
+
+redis_client = redis.Redis(host='localhost', port=6379, db=0)
+
+cities = ['Mississauga', 'Oakville']
+for city in cities:
+    key = f"weather_{city}"
+    redis_client.hset(key, mapping={
+        'temp': 22,
+        'wind': 5,
+        'condition': 'Cloudy',
+        'city': city
+    })
+    redis_client.expire(key, 10)
+```
+
+ 
+
+## Why It Matters
+When working with caching, expiration is as important as storing the data itself. Stale data in a cache can be more damaging than no cache at all—it misleads the application into thinking it's working with fresh information.
+
+
+
+ 
+
+## The Solution: Use Transactions or Lua Scripts
+To ensure that both commands succeed or fail together, we should wrap them in a pipeline within a transaction (MULTI/EXEC) or use a Lua script.
+
+A Redis pipeline allows multiple commands to be sent to the server as a single batch, reducing network overhead and minimizing the impact of network 
+glitches. For example, without pipelining, if two dependent write operations are executed separately, one might reach the Redis server while the other 
+could be lost due to a network issue. With pipelining, both operations are transmitted together in one network packet, making it more likely 
+that either both are received or both are dropped — offering a basic form of network-level consistency.
+
+However, it's important to note that pipelining does not guarantee atomicity — commands are still executed one after the other by Redis, and 
+failures in individual commands do not roll back others.
+
+To ensure true atomic execution, Redis transactions should be used. Using a transaction ensures that all operations within the block are executed 
+sequentially and without interference from other clients. The MULTI command queues the operations, and EXEC executes them all at once. This provides a 
+degree of isolation: no other client's commands are interleaved during the execution of the transaction.
+
+```python
+transaction = redis_client.pipeline(transaction=True)
+for city in cities:
+    key = f"weather_{city}"
+    transaction.hset(key, mapping={
+        'temp': 22,
+        'wind': 5,
+        'condition': 'Cloudy',
+        'city': city
+    })
+    transaction.expire(key, 10)
+
+transaction.execute()
+```
+
+Redis transactions come with a key caveat: they are not fully atomic. If one command within a transaction fails, the other successfully executed 
+commands are not rolled back. Redis will still run all the commands queued after MULTI.
+This means partial changes can persist even if part of the transaction fails.
+
+
+Solution if one needs true atomicity.... Lua scripts
+
+Redis guarantees atomicity when using [Lus script](https://redis.io/docs/latest/develop/interact/programmability/eval-intro/). All operations within a Lua script are executed as a single, indivisible operation — 
+meaning that no other commands from other clients can interleave during execution. If the script runs successfully, all its commands 
+are applied in order. However, if the script encounters a runtime error, the entire script is aborted, 
+and none of the changes are applied — ensuring that Redis remains unchanged.
+
+One thing though to keep in mind - Lua scrips are blocking calls, so when exectued Redis blocks all other operations. So Lua scripts should be extremely fast,
+otherwise you might see performance downgrade of your redis server.
+
+```python
+cities = ['Mississauga', 'Oakville']
+lua_script = """
+for i = 1, #KEYS do
+    local base = (i - 1) * 5
+    local key = KEYS[i]
+    redis.call('HSET', key, 'temp', ARGV[base + 1], 'wind', ARGV[base + 2], 'condition', ARGV[base + 3], 'city', ARGV[base + 4])
+    redis.call('EXPIRE', key, tonumber(ARGV[base + 5]))
+end
+return #KEYS
+"""
+
+keys = [f"weather_{city}" for city in cities]
+
+# For each city, pack values: temp=22, wind=5, condition='Cloudy', city=city, expire=10
+args = []
+for city in cities:
+    args.extend(['22', '5', 'Cloudy', city, '10'])
+
+redis_client.eval(lua_script, len(keys), *keys, *args)
+```
+
+## Final Thoughts
+Always consider atomicity when working with Redis for critical caching operations.
+
+Stale cache is worse than no cache.
+
+Just because Redis is fast and simple doesn't mean it can't fail silently—always wrap multi-step operations if consistency matters.
+
+ 
+

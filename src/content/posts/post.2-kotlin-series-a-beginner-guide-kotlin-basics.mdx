@@ -7,6 +7,7 @@ description: "Part 2 in the series of tutorials on Kotlin"
 categories: ["kotlin"]
 type: "post"
 draft: false
+showInDevMode: true
 ---
 
 import { Picture} from 'astro:assets';
@@ -198,13 +199,65 @@ val orderNumber = "5"
 <br/>
 
 ### Arrays
-Arrays are a data structure used to store multiple variables within a single variable.
+Arrays are a data structure used to store multiple elements of the same type within a single variable.
+They allow you to access elements by their index (position in the array). Arrays in Kotlin are **fixed** in size, 
+meaning that once an array is created, its size cannot be changed. However, you can modify the values of the 
+elements within the array.
+
+To declare an array, you can use the arrayOf() function, which initializes the array with a set of values. The type of elements in the array is inferred automatically based on the values provided.
+
+For example:
+
+```kotlin title="ArrayDataType.kt"
+val colors = arrayOf("blue", "green", "pink")
+```
+
+In this case, colors is an array of String elements with 3 colors: "blue", "green", and "pink".
+
+You can access individual elements of the array by specifying their index in square brackets []. 
+Note that array indices in Kotlin are zero-based, which means the first element has an index of 0.
+
+For example:
+
+```kotlin title="ArrayAccess.kt"
+val firstColor = colors[0] // "blue"
+val secondColor = colors[1] // "green"
+```
+
+If you want to know how many elements are present within an array, you can use the size property:
+```kotlin title="ArraySize.kt"
+val size = colors.size  // 3
+```
+
 
 
 &nbsp;
 
+## Kotlin Operators
+
+In order to perform arithmetic operations, we use operators. Kotlin has different type of operators that can be used.
+
+
 
 ## Kotlin Control Flow
+
+We use control flow to control the execution flow of a program. Using a conditional statement (if, else, when) 
+we tell the program what to execute if some conditions are met.  
+Using loops (for loops) we iterate through some elements and run some code for each. 
+
+For example, if we want to provide a rabait on bus cards based for diffeent age groups. We can make use 
+of if, else or when to do so.
+Let's say, people less than 12 years old should have a rabait of 50%. Those less than 18 years old a rabait of 25% 
+and those 18 years or older, a rabait of 5%. 
+
+### if, else statement
+
+
+
+ 
+
+### when statement
+
 
 &nbsp;
 
