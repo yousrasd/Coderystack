@@ -64,6 +64,19 @@ const Post: React.FC<PostProps> = ({ post }) => {
     setTheme(globalTheme);
   }, [globalTheme]);
 
+  useEffect(() => {
+    if (
+      post.showFullPost &&
+      typeof window !== "undefined" &&
+      typeof window.gtag === "function"
+    ) {
+      window.gtag("event", "page_view", {
+        page_title: post.title,
+        page_path: window.location.pathname,
+      });
+    }
+  }, []);
+
   if (!post.showFullPost) {
     return (
       <a
