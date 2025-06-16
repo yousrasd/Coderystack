@@ -84,6 +84,8 @@ transaction.execute()
 
 Heads up: Redis transactions are not fully atomic. If one command fails, others won't be rolled back — partial changes can still persist.
 
+<br/>
+
 ## True Atomicity with Lua Scripts 🧙‍♂️✨
 Redis guarantees atomicity when using Lua scripts. All operations run as one indivisible block — no other commands can run until the script finishes.
 
@@ -116,6 +118,8 @@ for city in cities:
 redis_client.eval(lua_script, len(keys), *keys, *args)
 ```
 
+<br/><br/>
+
 ## Final Thoughts  💭
 - Always consider atomicity when working with Redis for critical caching.
 
@@ -124,6 +128,6 @@ redis_client.eval(lua_script, len(keys), *keys, *args)
 - Redis is fast and simple, but it can fail silently — wrap multi-step operations when consistency matters!
 
 
-That's it for today!
-Hope this article helped you dodge some Redis gotchas 🧠💥.
+That's it for today!<br/>
+Hope this article helped you dodge some Redis gotchas 🧠💥.<br/>
 Happy coding and creating! ✨🚀
