@@ -18,11 +18,11 @@ export default defineConfig({
     }), 
     react(), 
     icon(), 
-    partytown({
-      config: {
-        forward: ['dataLayer.push'],
-      },
-    }),
+    // partytown({
+    //   config: {
+    //     forward: ['dataLayer.push'],
+    //   },
+    // }),
     expressiveCode({
       frames: {
         showCopyToClipboardButton: true,
