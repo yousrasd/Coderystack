@@ -8,5 +8,10 @@
         "url": "/contact",
         "translationKey": "nav.contact",
         "visible": false
+    },
+    "about": {
+        "url": "/about",
+        "translationKey": "nav.about",
+        "visible": true
     }
 }
