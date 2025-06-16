@@ -4,6 +4,7 @@ import react from "@astrojs/react";
 import icon from "astro-icon";
 import vercel from "@astrojs/vercel/serverless";
 import expressiveCode from "astro-expressive-code";
+import partytown from '@astrojs/partytown';
 
 import mdx from "@astrojs/mdx";
 
@@ -17,6 +18,11 @@ export default defineConfig({
     }), 
     react(), 
     icon(), 
+    partytown({
+      config: {
+        forward: ['dataLayer.push'],
+      },
+    }),
     expressiveCode({
       frames: {
         showCopyToClipboardButton: true,
