@@ -1,15 +1,14 @@
 {
-    "site": {
-        "title": "Coderystack",
-        "copyright": "© CoderyStack | 2024",
-        "logo": "/logo.svg",
-        "logo_dark": "/logo_dark.svg",
-        "logo_width": "197",
-        "logo_height": "31",
-        "logo_text": "Coderystack"
-    },
-    "settings": {
-        "pagination": 6,
-        "summary_length": 200
-    }
+  "site": {
+    "title": "Coderystack",
+    "logo": "/logo.svg",
+    "logo_dark": "/logo_dark.svg",
+    "logo_width": "197",
+    "logo_height": "31",
+    "logo_text": "Coderystack"
+  },
+  "settings": {
+    "pagination": 6,
+    "summary_length": 200
+  }
 }
