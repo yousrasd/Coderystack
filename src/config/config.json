@@ -1,6 +1,7 @@
 {
   "site": {
     "title": "Coderystack",
+    "copyright": "© CoderyStack | 2024",
     "logo": "/logo.svg",
     "logo_dark": "/logo_dark.svg",
     "logo_width": "197",
