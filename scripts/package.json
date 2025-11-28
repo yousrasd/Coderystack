@@ -1,0 +1,13 @@
+{
+  "name": "cross-post-scripts",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Scripts for cross-posting blog articles",
+  "scripts": {
+    "cross-post": "node cross-post-simple.js ../src/content/posts/post.4-android-memory-storage-part-1.mdx"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "dotenv": "^16.3.1"
+  }
+}
