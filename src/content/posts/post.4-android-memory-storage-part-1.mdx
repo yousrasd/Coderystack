@@ -1,0 +1,113 @@
+---
+title: "Android Storage Complete Guide: Internal Storage vs External Storage (Part 1)"
+image: "/post/covers/Post4-AndroidStorage.png"
+authors: ["Yousra@Coderystack"]
+date: 2025-11-28T13:00:00Z
+description: "Learn when to use internal vs external storage in Android, understand storage locations, and make the right choice for your app's data."
+categories: ["android", "storage"]
+type: "post"
+draft: false
+showInDevMode: true
+---
+
+While working on an Android app, persisting data is a common use case. Take a simple example: an app that supports light and dark themes. If a user toggles between both, we need to remember this preference across lifecycle changes, like when the app is closed and reopened.
+
+This theme-setting example highlights a common challenge: choosing the right storage mechanism. Which storage mechanism fits our specific needs while balancing performance, persistence, and security?
+
+In this article, we will introduce the two storage areas available to us in Android: internal and external storage.
+
+## Overview
+
+Android separates storage into app-specific (private to the app) and shared storage (visible to other apps). The terms private and shared are not only about encapsulation; they also relate to where files live in the device's storage volume.
+
+We'll focus on these two storage locations, what they actually mean in practice, and when you should use each one. Let's dive in.
+
+![Storage types](/post/post4-mem-storage/storage-type-android.png)
+
+## Internal Storage
+
+The internal app storage is a private space where the app can save data that only it can access. It's located at `/data/data/your.package.name/` on the device.
+
+Breaking down its characteristics:
+- **Privacy**: Only your app can access this data - it's sandboxed from other apps
+- **Availability**: Data is always available as long as the app is installed
+- **Permissions**: No permissions required to read or write
+- **Storage limitation**: Limited only by available device storage
+- **Persistence**: Data is deleted when the app is uninstalled
+
+So when should you use internal storage? Whenever you need to save information that is private to your app and doesn't need to survive an uninstall.
+
+Common use cases include:
+- App settings (theme preferences, user configurations)
+- Authentication tokens and session data
+- Local databases (for example, a hotel booking app storing hotel and booking information)
+- Cached API responses
+
+### Inspecting Internal Storage
+
+You can inspect your app's internal storage in Android Studio using the Device File Explorer:
+1. Navigate to View → Tool Windows → Device File Explorer
+2. Go to `/data/data/your.package.name/`
+
+Note: On non-rooted physical devices, Android Studio may not show all internal storage files due to system restrictions, but it works fully on emulators.
+
+## External Storage
+
+In contrast to internal storage which is private to your app, external storage provides shared space where files can be accessed across applications. Located at `/storage/emulated/0/`, it serves as Android's shared file system.
+
+External storage offers two distinct areas: shared folders and an app-specific folder.
+
+### Shared Folders
+
+**Shared folders** live under `/storage/emulated/0/` and include common directories like `Pictures/`, `Download/`, and `Documents/`. Files saved here remain visible to other applications and persist even after your app is uninstalled. This makes them ideal for user-facing content that should outlive your app.
+
+Key characteristics:
+- **Privacy**: Accessible by other apps (with proper permissions)
+- **Permissions**: Required on Android 9 and below; scoped storage on Android 10+
+- **Persistence**: Files remain after uninstallation
+- **Use cases**: Photos, videos, downloaded files, exported documents
+
+### App-Specific Folder
+
+**App-specific folder** resides at `/storage/emulated/0/Android/data/your.package.name/`. This area is designed for larger files that belong to your app but don't need the same level of privacy as internal storage. While technically on external storage, other apps cannot easily access this folder on Android 10 and above.
+
+Key characteristics:
+- **Privacy**: Protected from other apps (Android 10+)
+- **Permissions**: None required
+- **Persistence**: Deleted when app is uninstalled
+- **Use cases**: Large cache files, downloaded content for offline use, temporary media files
+
+### When to Use External Storage
+
+When should you opt for external storage?
+- A camera app saving photos and videos → `/storage/emulated/0/Pictures/` or `/DCIM/` (user wants to keep them)
+- A music streaming app downloading songs for offline listening → `/storage/emulated/0/Android/data/your.package.name/` (large files, temporary)
+- A note-taking app exporting PDFs → `/storage/emulated/0/Documents/` (user wants to share and keep)
+- A messaging app saving received images → `/storage/emulated/0/Pictures/` (if user wants to keep) or app-specific folder (if temporary)
+
+### Inspecting External Storage
+
+You can inspect external storage in Android Studio using the Device File Explorer:
+1. Navigate to View → Tool Windows → Device File Explorer
+2. Go to `/storage/emulated/0/`
+
+**Important note on accessing shared folders (Android 10+):**
+To write to shared folders like `Pictures/`, `Download/`, or `Documents/`, apps must use specific APIs:
+- **MediaStore API** for media files (images, videos, audio)
+- **Storage Access Framework (SAF)** for documents and other file types
+
+This is part of Android's scoped storage implementation, which ensures user privacy and data security by preventing apps from directly accessing shared folders without proper user consent or system APIs.
+
+Note: Accessing `Android/data/...` on physical devices may be restricted depending on manufacturer and Android version.
+
+## Understanding the "External" Naming
+
+You might wonder why app-specific storage lives under the shared folder if other apps can't access it.
+
+This comes down to historical context. In previous Android versions (pre-Android 10), any folder in the shared file system was accessible to other apps. This resulted in a privacy nightmare, so Google introduced scoped storage in Android 10+ to restrict app-specific folders to the owning app only.
+
+So the name "external" refers more to its location in the file system partition, not whether the data is truly shared or stored on a removable SD card.
+
+## What's Next
+
+Stay tuned for Part 2, where we will explore internal storage in more detail and discover the different options Android provides for persisting app data.
