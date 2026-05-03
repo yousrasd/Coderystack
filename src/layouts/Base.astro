@@ -60,9 +60,9 @@ const PUBLIC_GA_TRACKER_ID =
 
     <GoogleAnalytics measurementId={PUBLIC_GA_TRACKER_ID} />
   </head>
-  <body class="flex flex-col min-h-screen dark:bg-dark-primary-bg-color xl:px-48">
+  <body class="flex flex-col min-h-screen bg-bg-primary dark:bg-bg-primary-dark">
     <Header client:only="react" />
-    <main class="flex-grow px-main">
+    <main class="flex-grow px-5 md:px-12">
       <slot />
     </main>
     <Footer />

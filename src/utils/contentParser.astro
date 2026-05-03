@@ -19,9 +19,9 @@ export const getSinglePage = async <C extends CollectionKey>(
   return removeDrafts;
 };
 
-export const getPostsForCategory = async <C extends CollectionKey>(
+export const getPostsForCategory = async (
   category: string
-): Promise<PostProps[]> => {
+): Promise<PostProps["post"][]> => {
   const posts = sortByDate(await getSinglePage("posts"));
 
   return posts

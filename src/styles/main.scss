@@ -10,7 +10,7 @@
 //customize the default font used
 @layer base {
   body {
-    @apply text-gray-700
+    @apply text-text-heading dark:text-text-heading-dark;
   }
 }
 

@@ -3,25 +3,20 @@ import Post, { type PostProps } from "../Post";
 
 interface CategoryProps {
   category: string;
-  posts: PostProps[];
+  posts: PostProps["post"][];
 }
 export default function Category({ category, posts }: CategoryProps) {
   const t = useTranslations("en");
   return (
-    <section className="container mx-auto py-10 px-5 md:px-12 xl:px-48">
-      <div className="flex flex-col items-center w-full">
-        <h1 className="text-2xl dark:text-white">
-          {t("category.title")(category)}
-        </h1>
+    <section className="max-w-5xl mx-auto px-5 md:px-12 py-10">
+      <h1 className="text-3xl font-bold text-text-heading dark:text-text-heading-dark mb-10 text-center">
+        {t("category.title")(category)}
+      </h1>
 
-        <div className="flex flex-wrap gap-8 text-neutral-600">
-          {posts.map((p: PostProps) => (
-            <div className="my-8 w-full max-w-xs rounded-lg shadow-lg shadow-gray-200 dark:shadow-gray-900 bg-white dark:bg-gray-800 duration-300 hover:scale-105">
-              {/* @ts-ignore */}
-              <Post post={p} />
-            </div>
-          ))}
-        </div>
+      <div>
+        {posts.map((p) => (
+          <Post key={p.id} post={p as any} />
+        ))}
       </div>
     </section>
   );

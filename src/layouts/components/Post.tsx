@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from "react";
 import Markdown from "react-markdown";
-import { MdLabelOutline } from "react-icons/md";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import {
   materialDark,
@@ -45,14 +44,31 @@ export interface PostProps {
     showFullPost: Boolean;
     embededCodeLanguage?: string;
   };
+  featured?: boolean;
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const readingTime = (text: string) => {
+  const wordsPerMinute = 200;
+  const words = text?.split(/\s+/).length || 0;
+  const minutes = Math.ceil(words / wordsPerMinute);
+  return minutes;
+};
+
+const formatDate = (date: Date) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
+};
+
+const Post: React.FC<PostProps> = ({ post, featured = false }) => {
   const [lang, setLang] = useState<keyof typeof translations>("en");
   const t = useTranslations(lang);
   const [theme, setTheme] = useState<string | null>("dark");
   const globalTheme = useStore(globalThemeConfig || "light");
   const [postUrl, setPostUrl] = useState("");
+  const minutes = readingTime(post.body);
 
   useEffect(() => {
     const lang = getLangFromUrl(new URL(window.location.href));
@@ -78,19 +94,98 @@ const Post: React.FC<PostProps> = ({ post }) => {
   }, []);
 
   if (!post.showFullPost) {
+    if (featured) {
+      return (
+        <a
+          href={`/posts/${post.slug}`}
+          className="block group py-12 border-b border-border-color dark:border-border-color-dark"
+        >
+          <span className="text-primary-color text-sm font-medium tracking-widest uppercase mb-4 block">
+            Featured
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold text-text-heading dark:text-text-heading-dark mb-6 leading-tight group-hover:text-primary-color transition-colors">
+            {post.title}
+          </h2>
+          {post.description && (
+            <p className="text-lg text-text-body dark:text-text-body-dark leading-relaxed mb-6 max-w-3xl">
+              {post.description}
+            </p>
+          )}
+          <div className="flex items-center text-sm text-text-meta dark:text-text-meta-dark font-mono">
+            {post.date && <span>{formatDate(post.date)}</span>}
+            <span className="mx-2">·</span>
+            <span>{minutes} min read</span>
+          </div>
+        </a>
+      );
+    }
+
     return (
       <a
-        className="flex rounded-lg border-border text-base mx-auto h-full"
         href={`/posts/${post.slug}`}
+        className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 py-10 border-b border-border-color dark:border-border-color-dark group"
       >
-        <Header post={post} showFullPost={post.showFullPost} />
+        <div className="md:w-48 shrink-0">
+          {post.date && (
+            <p className="text-sm text-text-meta dark:text-text-meta-dark font-mono mb-1">
+              {formatDate(post.date)}
+            </p>
+          )}
+          <p className="text-sm text-text-meta dark:text-text-meta-dark font-mono mb-2">
+            {minutes} min
+          </p>
+          {post.categories && post.categories.length > 0 && (
+            <p className="text-xs text-text-meta dark:text-text-meta-dark tracking-wider uppercase">
+              {post.categories.join("  ")}
+            </p>
+          )}
+        </div>
+        <div className="flex-1 min-w-0">
+          <h2 className="text-xl md:text-2xl font-bold text-text-heading dark:text-text-heading-dark mb-2 group-hover:text-primary-color transition-colors leading-snug">
+            {post.title}
+          </h2>
+          {post.description && (
+            <p className="text-text-body dark:text-text-body-dark leading-relaxed line-clamp-2">
+              {post.description}
+            </p>
+          )}
+        </div>
       </a>
     );
   }
 
   return (
-    <div className="flex flex-col mb-8 border-border text-base my-10 mx-auto w-full sm:w-4/5 lg:w-2/3 xl:w-4/5 2xl:w-3/5">
-      <Header post={post} />
+    <div className="max-w-3xl mx-auto py-10">
+      <article>
+        {post.date && (
+          <p className="text-sm text-text-meta dark:text-text-meta-dark font-mono mb-4">
+            {formatDate(post.date)}
+          </p>
+        )}
+        <h1 className="text-3xl md:text-4xl font-bold text-text-heading dark:text-text-heading-dark mb-6 leading-tight">
+          {post.title}
+        </h1>
+        {post.categories && post.categories.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {post.categories.map((c) => (
+              <a
+                key={c}
+                href={`/category/${c}`}
+                className="text-xs text-primary-color tracking-wider uppercase hover:underline"
+              >
+                {c}
+              </a>
+            ))}
+          </div>
+        )}
+        {post.image && (
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full max-w-lg mx-auto mb-8 rounded-lg"
+          />
+        )}
+      </article>
       <SocialShare postUrl={postUrl} />
     </div>
   );
@@ -98,72 +193,17 @@ const Post: React.FC<PostProps> = ({ post }) => {
 
 export default Post;
 
-const Header = ({ post, showFullPost = true }) => (
-  <div
-    key={post.id}
-    className="flex flex-col h-full w-full justify-center items-center"
-  >
-    {post && post?.image && !showFullPost && (
-      <img
-        src={post.image}
-        className="pb-4 w-full h-56 object-cover rounded-lg"
-      />
-    )}
-    <h2
-      className={`dark:text-white text-center ${
-        !post.showFullPost && "hover:text-primary-color px-5"
-      } ${showFullPost ? "text-2xl" : "text-xl"} pb-5`}
-    >
-      {post.title}
-    </h2>
-    {post && post?.image && showFullPost && (
-      <img src={post.image} className="pb-4 max-w-md " />
-    )}
-
-    <ul className="flex flex-col items-center align-end pb-5 mt-auto">
-      {post.date && (
-        <li
-          key={post.date.toString()}
-          className="dark:text-gray-300 text-zinc-400 mr-5"
-        >
-          {post.date?.toDateString() || ""}
-        </li>
-      )}
-      <li className="dark:text-gray-300  mr-5 flex items-center ">
-        {post &&
-          post.categories &&
-          post.categories.map((c, i) => (
-            <div key={c} className={i > 0 ? "pl-2" : "pl-0"}>
-              <span className="text-gray-500">{i > 0 ? "|" : ""}</span>
-
-              {showFullPost ? (
-                <a
-                  className="pl-2 text-secondary-color"
-                  href={`/category/${c}`}
-                >
-                  {c}
-                </a>
-              ) : (
-                <span className="pl-2 text-secondary-color">{c}</span>
-              )}
-            </div>
-          ))}
-      </li>
-    </ul>
-  </div>
-);
-
 const SocialShare = ({ postUrl }) =>
   postUrl && (
-    <div className="flex flex-row w-full justify-end">
-      <LinkedinShareButton style={{ paddingRight: "5px" }} url={postUrl}>
-        <LinkedinIcon size={30} round={true} />
+    <div className="flex flex-row w-full justify-end gap-2 mt-8 pt-6 border-t border-border-color dark:border-border-color-dark">
+      <LinkedinShareButton url={postUrl}>
+        <LinkedinIcon size={28} round={true} />
       </LinkedinShareButton>
-      <TwitterShareButton style={{ paddingRight: "5px" }} url={postUrl}>
-        <TwitterIcon size={30} round={true} />
+      <TwitterShareButton url={postUrl}>
+        <TwitterIcon size={28} round={true} />
       </TwitterShareButton>
       <FacebookShareButton url={postUrl}>
-        <FacebookIcon size={30} round={true} />
+        <FacebookIcon size={28} round={true} />
       </FacebookShareButton>
     </div>
   );

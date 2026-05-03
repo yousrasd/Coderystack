@@ -12,9 +12,11 @@ export default function Pagination(props: any) {
   const generatePageView = (isActive: boolean, page: number) => (
     <a
       key={page}
-      className={`${
-        isActive && "bg-primary-color text-white py-2 px-3.5 rounded-md"
-      } mx-3 `}
+      className={`mx-2 text-sm ${
+        isActive
+          ? "text-primary-color font-medium"
+          : "text-text-meta dark:text-text-meta-dark hover:text-text-heading dark:hover:text-text-heading-dark"
+      }`}
       href={page == 1 ? "/" : `/page/${page}`}
     >
       <span>{page}</span>
@@ -22,18 +24,24 @@ export default function Pagination(props: any) {
   );
 
   return (
-    <div className="flex flex-row items-center">
+    <div className="flex flex-row items-center font-mono">
       {activePage > 1 && (
-        <a href={activePage == 2 ? "/" : `/page/${activePage - 1}`}>
-          <MdChevronLeft size={25} />
+        <a
+          href={activePage == 2 ? "/" : `/page/${activePage - 1}`}
+          className="text-text-meta dark:text-text-meta-dark hover:text-text-heading dark:hover:text-text-heading-dark mr-2"
+        >
+          <MdChevronLeft size={20} />
         </a>
       )}
       {Array.from({ length: paginationSize }, (_, index) =>
         generatePageView(index + 1 == activePage, index + 1)
       )}
       {activePage < paginationSize && (
-        <a href={`/page/${activePage + 1}`}>
-          <MdChevronRight size={25} />
+        <a
+          href={`/page/${activePage + 1}`}
+          className="text-text-meta dark:text-text-meta-dark hover:text-text-heading dark:hover:text-text-heading-dark ml-2"
+        >
+          <MdChevronRight size={20} />
         </a>
       )}
     </div>
