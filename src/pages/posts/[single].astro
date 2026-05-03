@@ -4,6 +4,7 @@
 export const prerender = true;
 
 import Base from "@/layouts/Base.astro";
+import { render } from "astro:content";
 import { getSinglePage } from "@/utils/contentParser.astro";
 import Post from "@/components/Post";
 import PostComments from "@/components/PostComments.astro";
@@ -13,7 +14,7 @@ export async function getStaticPaths() {
 
   const paths = posts.map((post: any) => ({
     params: {
-      single: post.slug,
+      single: post.id,
     },
     props: { post },
   }));
@@ -22,7 +23,7 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await post.render()
+const { Content } = await render(post);
 ---
 
 <Base>
@@ -30,7 +31,7 @@ const { Content } = await post.render()
     <Post
       post={{
         id: post?.id,
-        slug: post?.slug,
+        slug: post?.id,
         body: post?.body,
         showFullPost: true,
         ...post?.data,

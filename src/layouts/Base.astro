@@ -1,6 +1,6 @@
 ---
 import { AstroFont } from "astro-font";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer.astro";
@@ -31,7 +31,7 @@ const PUBLIC_GA_TRACKER_ID =
       rel="stylesheet"
     />
     <title>{config.site.title}</title>
-    <ViewTransitions />
+    <ClientRouter />
 
     <AstroFont
       config={[
