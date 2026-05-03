@@ -26,27 +26,20 @@ const { Content } = await post.render()
 ---
 
 <Base>
-  <section class="flex">
-    <div>
-      <div class="flex flex-col  w-full markdown dark:text-white pb-8">
-        {
-            <Post
-              post={{
-                id: post?.id,
-                slug: post?.slug,
-                body: post?.body,
-                showFullPost: true,
-                ...post?.data,
-              }}
-              client:idle
-            />
-            <Content  />
-
-        }
-
-      </div>
+  <section class="max-w-3xl mx-auto px-5 md:px-12 py-10">
+    <Post
+      post={{
+        id: post?.id,
+        slug: post?.slug,
+        body: post?.body,
+        showFullPost: true,
+        ...post?.data,
+      }}
+      client:idle
+    />
+    <div class="markdown dark:text-text-heading-dark">
+      <Content />
+    </div>
     <PostComments />
-
-  </div>
   </section>
 </Base>

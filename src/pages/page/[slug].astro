@@ -44,32 +44,24 @@ const currentPosts = posts.slice(postsSliceStart, postsSliceEnd);
 ---
 
 <Base>
-  <section class="container mx-auto py-10 px-5 md:px-12 ">
-    <div
-      class="grid grid-flow-row gap-8 text-neutral-600 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3"
-    >
-      {
-        currentPosts.map((post) => {
-          return (
-            <div class="justify-self-center my-8 rounded-lg shadow-lg shadow-gray-200 max-w-sm dark:shadow-gray-900 bg-white dark:bg-gray-800 duration-300 hover:scale-105">
-              <Post
-                post={{
-                  id: post.id,
-                  slug: post.slug,
-                  body: post.body,
-                  showFullPost: false,
-                  ...post.data,
-                }}
-                client:idle
-              />
-            </div>
-          );
-        })
-      }
-    </div>
+  <section class="max-w-5xl mx-auto px-5 md:px-12 py-10">
+    {
+      currentPosts.map((post) => (
+        <Post
+          post={{
+            id: post.id,
+            slug: post.slug,
+            body: post.body,
+            showFullPost: false,
+            ...post.data,
+          }}
+          client:idle
+        />
+      ))
+    }
     {
       totalPages > 1 && (
-        <div class="flex flex-row justify-center">
+        <div class="flex flex-row justify-center py-10">
           <Pagination paginationSize={totalPages} activePage={currentPage} />
         </div>
       )

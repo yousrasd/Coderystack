@@ -1,8 +1,27 @@
 ---
-import config from "@/config/config.json";
 const year = new Date().getFullYear()
 ---
 
-<footer class="px-main flex justify-center dark:text-white">
-  <p class="text-gray-500">© CoderyStack {year}</p>
+<footer class="border-t border-border-color dark:border-border-color-dark py-8 mt-auto">
+  <div class="max-w-5xl mx-auto px-5 md:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
+    <p class="text-text-meta dark:text-text-meta-dark text-sm">© CoderyStack {year}</p>
+    <div class="flex items-center gap-6">
+      <a
+        href="https://github.com/yousrasd"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-text-meta dark:text-text-meta-dark hover:text-primary-color transition-colors text-sm"
+      >
+        GitHub
+      </a>
+      <a
+        href="https://www.linkedin.com/in/yousra-s-836341165/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-text-meta dark:text-text-meta-dark hover:text-primary-color transition-colors text-sm"
+      >
+        LinkedIn
+      </a>
+    </div>
+  </div>
 </footer>
