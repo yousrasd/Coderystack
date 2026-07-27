@@ -1,0 +1,82 @@
+---
+title: "I Have Zero Users — and I'm Already Rewriting My Backend"
+image: "/post/post8-fisky-supabase/slide-1.jpeg"
+authors: ["Yousra@Coderystack"]
+date: 2026-07-27T09:00:00Z
+description: "I'm moving Fisky from Firebase to Supabase before launch — not because Firebase is bad, but because I want a clear spending boundary before real users arrive."
+categories: ["backend", "thought"]
+tags: ["firebase", "supabase", "fisky"]
+type: "post"
+draft: false
+showInDevMode: false
+---
+import { Picture } from 'astro:assets';
+
+I have zero users and I'm already rewriting my backend.
+
+Sounds crazy, right?
+
+I'm building Fisky in my free time. It's almost ready to launch, and this weekend I made a big decision:
+
+**I'm moving from Firebase to Supabase.**
+
+<Picture src="/post/post8-fisky-supabase/slide-2.jpeg" alt="The big decision: moving Fisky from Firebase to Supabase" width={800} height={800} />
+
+## Why? Honestly, risk management.
+
+Firebase has been great for getting started. The developer experience is amazing, especially for a solo developer moving fast.
+
+But as I got closer to launch, I started thinking more about what could go wrong.
+
+I've read many stories from developers on Reddit and other communities who woke up to unexpected cloud bills because of a bug, a misconfiguration, or unexpected usage.
+
+Sometimes the problem isn't that your app succeeds.
+Sometimes the problem is that something breaks silently and you don't notice until the bill arrives. A bug, a bad query pattern, or a sudden spike in activity could create a stressful situation.
+
+<Picture src="/post/post8-fisky-supabase/slide-3.jpeg" alt="The silent risk: unexpected cloud bills" width={800} height={800} />
+
+## I tried to protect myself first
+
+I spent days improving my Firebase setup:
+
+- tightening security rules
+- validating data
+- adding limits
+- setting up budget alerts
+
+Those things help.
+
+But they don't completely remove the risk of usage-based costs growing unexpectedly.
+
+<Picture src="/post/post8-fisky-supabase/slide-4.jpeg" alt="Hardening the Firebase setup: security rules, validation, limits, budget alerts" width={800} height={800} />
+
+## Then I looked at Supabase
+
+One thing that caught my attention was having a clearer spending boundary. With the spend cap option, I can choose to have my project stop when I reach my limit instead of letting costs continue increasing.
+
+For a solo developer, that predictability matters.
+
+<Picture src="/post/post8-fisky-supabase/slide-5.jpeg" alt="Supabase spend cap: a clear spending boundary" width={800} height={800} />
+
+## Why not migrate later?
+
+Could I migrate later after launch? Of course.
+
+But migrating a backend with real users, production data, and paying customers is a very different challenge.
+
+Migrating now, with zero users, is just moving boxes in an empty room.
+
+So I'm choosing the painful thing early, while the cost of change is still low.
+
+<Picture src="/post/post8-fisky-supabase/slide-6.jpeg" alt="Migrating with zero users is moving boxes in an empty room" width={800} height={800} />
+
+## The lesson I'm learning as a solo developer
+
+The best time to fix a risky technical decision is before it becomes an expensive one.
+
+Building an app isn't only about shipping features. It's also about thinking ahead and reducing future problems before they happen.
+
+<Picture src="/post/post8-fisky-supabase/slide-7.jpeg" alt="The lesson: fix risky technical decisions before they become expensive ones" width={800} height={800} />
+
+Anyone else made a major technical switch before launch?
+Was it worth it?
