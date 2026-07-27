@@ -15,11 +15,11 @@ const Navbar = () => {
   const currentPath = window.location.pathname;
 
   const menuItemClassName = (menuPath: any) => `
-    block max-lg:mt-4 lg:mt-0 lg:mr-8 lg:inline-block text-base
+    block rounded-full px-3 py-2 text-sm font-semibold transition-colors max-lg:mt-2 lg:inline-block
     ${
       currentPath === menuPath
-        ? "text-primary-color"
-        : "text-text-heading dark:text-text-heading-dark hover:text-primary-color"
+        ? "bg-primary-color-light text-primary-color dark:text-text-heading-dark"
+        : "text-text-body dark:text-text-body-dark hover:bg-surface-muted hover:text-text-heading dark:hover:bg-surface-muted-dark dark:hover:text-text-heading-dark"
     }
   `;
 
@@ -41,14 +41,17 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="border-b border-border-color dark:border-border-color-dark">
-      <div className="max-w-5xl mx-auto flex items-center justify-between flex-wrap px-5 md:px-12 py-4">
-        <div className="flex">
+    <nav className="sticky top-0 z-20 border-b border-border-color/80 bg-bg-primary/90 backdrop-blur dark:border-border-color-dark/80 dark:bg-bg-primary-dark/90">
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between px-5 py-4 md:px-12">
+        <div className="flex items-center gap-3">
           <Logo />
         </div>
 
         <div className="block lg:hidden" id="humburgerMenu">
-          <button className="flex items-center px-3 py-2 border rounded text-text-heading dark:text-text-heading-dark border-border-color dark:border-border-color-dark hover:text-primary-color hover:border-primary-color">
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-border-color text-text-heading transition-colors hover:border-primary-color hover:text-primary-color dark:border-border-color-dark dark:text-text-heading-dark"
+            aria-label="Toggle navigation"
+          >
             <svg
               id="menuIcon"
               className={`fill-current h-5 w-5 ${isMenuOpen ? "hidden" : ""}`}
@@ -77,12 +80,12 @@ const Navbar = () => {
         </div>
 
         <div
-          className={`w-full block lg:flex lg:w-auto justify-end
+          className={`w-full lg:flex lg:w-auto lg:justify-end
             ${isMenuOpen ? "" : "hidden"}
             lg:visible`}
           id="menuItems"
         >
-          <ul className="text-sm lg:flex-grow flex flex-col lg:flex-row items-center">
+          <ul className="mt-4 flex flex-col items-center gap-1 rounded-lg border border-border-color bg-surface p-3 text-sm shadow-soft-line dark:border-border-color-dark dark:bg-surface-dark lg:mt-0 lg:flex-row lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none">
             {Object.entries(menuData)
               .filter(([key, { visible }]) => !!visible)
               .map(([key, { url, hidden, translationKey }]) => (

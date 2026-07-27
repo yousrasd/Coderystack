@@ -1,24 +1,52 @@
 ---
 import Base from "@/layouts/Base.astro";
+import SocialIcons from "@/components/SocialIcons";
 
 export const prerender = true;
 
 ---
 
 <Base>
-	<section class="max-w-3xl mx-auto py-10 px-5 md:px-12">
+	<section class="max-w-5xl mx-auto px-5 md:px-12 py-12 md:py-20">
+		<div class="grid gap-10 border-b border-border-color pb-12 dark:border-border-color-dark lg:grid-cols-[1fr_320px]">
+			<div>
+				<p class="mb-5 font-mono text-xs font-semibold uppercase tracking-[0.22em] text-secondary-color">About Coderystack</p>
+				<h1 class="max-w-3xl text-4xl md:text-6xl font-black leading-[1.02] text-text-heading dark:text-text-heading-dark">
+					I write about the parts of software that teach you back.
+				</h1>
+				<p class="mt-7 max-w-2xl text-lg leading-8 text-text-body dark:text-text-body-dark">
+					I'm Yousra, a mobile developer with experience across backend and frontend projects. Coderystack is my place for practical notes on Android, Kotlin, product engineering, AI-assisted coding, and the decisions that happen between the tutorial and production.
+				</p>
+				<SocialIcons className="mt-8" />
+			</div>
 
-		<h1 class="text-3xl md:text-4xl font-bold text-text-heading dark:text-text-heading-dark mb-6">Hi there 👋</h1>
+			<aside class="self-start rounded-xl border border-primary-color/20 bg-primary-color-light/40 p-6 dark:border-border-color-dark dark:bg-surface-dark">
+				<p class="font-mono text-xs font-semibold uppercase tracking-[0.22em] text-primary-color">Current focus</p>
+				<ul class="mt-5 space-y-3 text-text-body dark:text-text-body-dark">
+					<li>Android and Kotlin fundamentals</li>
+					<li>Backend patterns that support mobile apps</li>
+					<li>Working well with AI coding tools</li>
+					<li>Clear explanations for practical engineering problems</li>
+				</ul>
+			</aside>
+		</div>
 
-		<p class="text-text-body dark:text-text-body-dark leading-relaxed mb-6">
-			I'm a mobile developer with experience working across both backend and frontend projects.
-			I enjoy learning new skills and building products that create a positive impact on our society. 🌱💡
-		</p>
-
-		<p class="text-text-body dark:text-text-body-dark leading-relaxed">
-			Want to connect? Feel free to reach out on
-			<a href="https://www.linkedin.com/in/yousra-saidani-836341165/" target="_blank" class="text-primary-color hover:underline">LinkedIn</a>!
-		</p>
-
+		<div class="grid gap-5 py-12 md:grid-cols-3">
+			<div class="rounded-xl border border-border-color border-t-2 border-t-primary-color bg-surface p-6 dark:border-border-color-dark dark:border-t-primary-color dark:bg-surface-dark">
+				<h2 class="text-xl font-black text-text-heading dark:text-text-heading-dark">What I value</h2>
+				<p class="mt-3 leading-7 text-text-body dark:text-text-body-dark">Simple systems, readable code, patient learning, and clear write-ups from real engineering work.</p>
+			</div>
+			<div class="rounded-xl border border-border-color border-t-2 border-t-primary-color bg-surface p-6 dark:border-border-color-dark dark:border-t-primary-color dark:bg-surface-dark">
+				<h2 class="text-xl font-black text-text-heading dark:text-text-heading-dark">What I write</h2>
+				<p class="mt-3 leading-7 text-text-body dark:text-text-body-dark">Tutorials, debugging stories, architecture notes, and reflections on how engineering practice changes with AI.</p>
+			</div>
+			<div class="rounded-xl border border-border-color border-t-2 border-t-secondary-color bg-surface p-6 dark:border-border-color-dark dark:border-t-secondary-color dark:bg-surface-dark">
+				<h2 class="text-xl font-black text-text-heading dark:text-text-heading-dark">Where to find me</h2>
+				<p class="mt-3 leading-7 text-text-body dark:text-text-body-dark">
+					I share longer writing here, and shorter updates on social media.
+				</p>
+				<SocialIcons className="mt-4" />
+			</div>
+		</div>
 	</section>
 </Base>

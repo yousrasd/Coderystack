@@ -27,7 +27,7 @@ const { Content } = await render(post);
 ---
 
 <Base>
-  <section class="max-w-3xl mx-auto px-5 md:px-12 py-10">
+  <section class="max-w-3xl mx-auto px-5 md:px-12 py-10 md:py-16">
     <Post
       post={{
         id: post?.id,
@@ -38,7 +38,7 @@ const { Content } = await render(post);
       }}
       client:idle
     />
-    <div class="markdown dark:text-text-heading-dark">
+    <div class="markdown">
       <Content />
     </div>
     <PostComments />

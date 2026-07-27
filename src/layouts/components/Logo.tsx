@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import config from "@/config/config.json";
 import { globalTheme as globalThemeConfig } from "@/store/themeStore";
 import { useStore } from "@nanostores/react";

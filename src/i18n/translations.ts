@@ -11,7 +11,7 @@ export const translations = {
     "nav.contact": "Contact",
     "post.readMore": "Read More",
     "footer.rightsReserved": "All Rights Reserved",
-    "category.title": (category: string) => `All blogs about ${category}`,
+    "category.title": (category: string) => `Notes about ${category}`,
   },
 } as const;
 

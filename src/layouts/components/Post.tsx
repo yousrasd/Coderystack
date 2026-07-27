@@ -1,20 +1,6 @@
 // @ts-nocheck
 
 import React, { useEffect, useState } from "react";
-import Markdown from "react-markdown";
-import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import {
-  materialDark,
-  materialLight,
-  solarizedlight,
-} from "react-syntax-highlighter/dist/cjs/styles/prism";
-import { useStore } from "@nanostores/react";
-import rehypeRaw from "rehype-raw";
-
-import config from "@/config/config.json";
-import { getLangFromUrl, useTranslations } from "@/i18n/utils";
-import { translations } from "@/i18n/translations";
-import { globalTheme as globalThemeConfig } from "@/store/themeStore";
 import {
   LinkedinShareButton,
   LinkedinIcon,
@@ -25,6 +11,7 @@ import {
   EmailShareButton,
   EmailIcon,
 } from "react-share";
+import { FiArrowUpRight } from "react-icons/fi";
 
 export interface PostProps {
   post: {
@@ -45,6 +32,7 @@ export interface PostProps {
     embededCodeLanguage?: string;
   };
   featured?: boolean;
+  index?: number;
 }
 
 const readingTime = (text: string) => {
@@ -62,23 +50,13 @@ const formatDate = (date: Date) => {
   });
 };
 
-const Post: React.FC<PostProps> = ({ post, featured = false }) => {
-  const [lang, setLang] = useState<keyof typeof translations>("en");
-  const t = useTranslations(lang);
-  const [theme, setTheme] = useState<string | null>("dark");
-  const globalTheme = useStore(globalThemeConfig || "light");
+const Post: React.FC<PostProps> = ({ post, featured = false, index = 1 }) => {
   const [postUrl, setPostUrl] = useState("");
   const minutes = readingTime(post.body);
 
   useEffect(() => {
-    const lang = getLangFromUrl(new URL(window.location.href));
-    setLang(lang);
     setPostUrl(window.location.href);
   }, []);
-
-  useEffect(() => {
-    setTheme(globalTheme);
-  }, [globalTheme]);
 
   useEffect(() => {
     if (
@@ -98,23 +76,46 @@ const Post: React.FC<PostProps> = ({ post, featured = false }) => {
       return (
         <a
           href={`/posts/${post.slug}`}
-          className="block group py-12 border-b border-border-color dark:border-border-color-dark"
+          className="group grid gap-7 border-b border-border-color py-10 transition-colors dark:border-border-color-dark md:grid-cols-[120px_1fr] md:py-14"
         >
-          <span className="text-primary-color text-sm font-medium tracking-widest uppercase mb-4 block">
-            Featured
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-heading dark:text-text-heading-dark mb-6 leading-tight group-hover:text-primary-color transition-colors">
-            {post.title}
-          </h2>
-          {post.description && (
-            <p className="text-lg text-text-body dark:text-text-body-dark leading-relaxed mb-6 max-w-3xl">
-              {post.description}
-            </p>
-          )}
-          <div className="flex items-center text-sm text-text-meta dark:text-text-meta-dark font-mono">
-            {post.date && <span>{formatDate(post.date)}</span>}
-            <span className="mx-2">·</span>
-            <span>{minutes} min read</span>
+          <div className="flex items-start gap-4 md:block">
+            <span className="font-mono text-5xl font-semibold leading-none text-primary-color md:text-7xl">
+              {String(index).padStart(2, "0")}
+            </span>
+            <span className="mt-2 block font-mono text-xs font-semibold uppercase tracking-[0.22em] text-secondary-color md:mt-4">
+              latest note
+            </span>
+          </div>
+
+          <div>
+            <div className="mb-5 flex flex-wrap items-center gap-3">
+              {post.categories?.slice(0, 2).map((category) => (
+                <span
+                  key={category}
+                  className="rounded-full border border-primary-color/20 bg-primary-color-light/40 px-3 py-1 font-mono text-xs text-primary-color dark:border-border-color-dark dark:bg-surface-muted-dark"
+                >
+                  {category}
+                </span>
+              ))}
+            </div>
+            <div className="grid gap-7 md:grid-cols-[1fr_auto] md:items-start">
+              <div>
+                <h2 className="max-w-4xl text-4xl font-black leading-[1.02] text-text-heading transition-colors group-hover:text-primary-color dark:text-text-heading-dark md:text-6xl">
+                  {post.title}
+                </h2>
+                {post.description && (
+                  <p className="mt-6 max-w-3xl text-lg leading-8 text-text-body dark:text-text-body-dark md:text-xl md:leading-9">
+                    {post.description}
+                  </p>
+                )}
+              </div>
+              <FiArrowUpRight className="hidden text-primary-color transition-transform group-hover:translate-x-1 group-hover:-translate-y-1 md:block" size={28} />
+            </div>
+            <div className="mt-7 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-secondary-color">
+              {post.date && <span>{formatDate(post.date)}</span>}
+              <span aria-hidden="true">/</span>
+              <span>{minutes} min read</span>
+            </div>
           </div>
         </a>
       );
@@ -123,55 +124,64 @@ const Post: React.FC<PostProps> = ({ post, featured = false }) => {
     return (
       <a
         href={`/posts/${post.slug}`}
-        className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8 py-10 border-b border-border-color dark:border-border-color-dark group"
+        className="group grid gap-5 border-b border-border-color py-8 transition-colors hover:border-primary-color/50 dark:border-border-color-dark md:grid-cols-[120px_180px_1fr_auto] md:items-start md:gap-8"
       >
-        <div className="md:w-48 shrink-0">
+        <span className="font-mono text-4xl font-semibold leading-none text-border-color transition-colors group-hover:text-primary-color dark:text-border-color-dark">
+          {String(index).padStart(2, "0")}
+        </span>
+        <div className="shrink-0">
           {post.date && (
-            <p className="text-sm text-text-meta dark:text-text-meta-dark font-mono mb-1">
+            <p className="mb-1 font-mono text-sm text-secondary-color">
               {formatDate(post.date)}
             </p>
           )}
-          <p className="text-sm text-text-meta dark:text-text-meta-dark font-mono mb-2">
+          <p className="mb-3 font-mono text-sm text-secondary-color">
             {minutes} min
           </p>
           {post.categories && post.categories.length > 0 && (
-            <p className="text-xs text-text-meta dark:text-text-meta-dark tracking-wider uppercase">
-              {post.categories.join("  ")}
+            <p className="font-mono text-xs uppercase tracking-[0.18em] text-primary-color">
+              {post.categories.join(" / ")}
             </p>
           )}
         </div>
         <div className="flex-1 min-w-0">
-          <h2 className="text-xl md:text-2xl font-bold text-text-heading dark:text-text-heading-dark mb-2 group-hover:text-primary-color transition-colors leading-snug">
+          <h2 className="mb-3 text-2xl font-black leading-snug text-text-heading transition-colors group-hover:text-primary-color dark:text-text-heading-dark md:text-3xl">
             {post.title}
           </h2>
           {post.description && (
-            <p className="text-text-body dark:text-text-body-dark leading-relaxed line-clamp-2">
+            <p className="max-w-2xl text-base leading-7 text-text-body line-clamp-2 dark:text-text-body-dark">
               {post.description}
             </p>
           )}
         </div>
+        <FiArrowUpRight className="hidden text-text-meta transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-primary-color dark:text-text-meta-dark md:block" size={22} />
       </a>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto py-10">
+    <div className="mx-auto max-w-3xl py-8 md:py-12">
       <article>
         {post.date && (
-          <p className="text-sm text-text-meta dark:text-text-meta-dark font-mono mb-4">
+          <p className="mb-5 font-mono text-sm text-secondary-color">
             {formatDate(post.date)}
           </p>
         )}
-        <h1 className="text-3xl md:text-4xl font-bold text-text-heading dark:text-text-heading-dark mb-6 leading-tight">
+        <h1 className="mb-7 text-4xl font-black leading-[1.05] text-text-heading dark:text-text-heading-dark md:text-6xl">
           {post.title}
         </h1>
+        {post.description && (
+          <p className="mb-7 text-xl leading-9 text-text-body dark:text-text-body-dark">
+            {post.description}
+          </p>
+        )}
         {post.categories && post.categories.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-6">
+          <div className="mb-8 flex flex-wrap gap-2">
             {post.categories.map((c) => (
               <a
                 key={c}
                 href={`/category/${c}`}
-                className="text-xs text-primary-color tracking-wider uppercase hover:underline"
+                className="rounded-full border border-primary-color/20 bg-primary-color-light/40 px-3 py-1 font-mono text-xs uppercase tracking-[0.16em] text-primary-color transition-colors hover:border-primary-color dark:border-border-color-dark dark:bg-surface-muted-dark"
               >
                 {c}
               </a>
@@ -182,7 +192,7 @@ const Post: React.FC<PostProps> = ({ post, featured = false }) => {
           <img
             src={post.image}
             alt={post.title}
-            className="w-full max-w-lg mx-auto mb-8 rounded-lg"
+            className="mx-auto mb-8 w-full max-w-lg rounded-lg border border-border-color shadow-soft-line dark:border-border-color-dark"
           />
         )}
       </article>
@@ -195,7 +205,7 @@ export default Post;
 
 const SocialShare = ({ postUrl }) =>
   postUrl && (
-    <div className="flex flex-row w-full justify-end gap-2 mt-8 pt-6 border-t border-border-color dark:border-border-color-dark">
+    <div className="mt-8 flex w-full flex-row justify-end gap-2 border-t border-border-color pt-6 dark:border-border-color-dark">
       <LinkedinShareButton url={postUrl}>
         <LinkedinIcon size={28} round={true} />
       </LinkedinShareButton>
@@ -205,5 +215,8 @@ const SocialShare = ({ postUrl }) =>
       <FacebookShareButton url={postUrl}>
         <FacebookIcon size={28} round={true} />
       </FacebookShareButton>
+      <EmailShareButton url={postUrl}>
+        <EmailIcon size={28} round={true} />
+      </EmailShareButton>
     </div>
   );

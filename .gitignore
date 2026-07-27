@@ -28,3 +28,5 @@ pnpm-debug.log*
 .env
 
 scripts/.env
+# vercel build output
+.vercel/

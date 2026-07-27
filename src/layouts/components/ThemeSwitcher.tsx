@@ -23,13 +23,13 @@ const ThemeSwitcher: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="max-lg:mt-4 lg:mt-0 p-2 border border-border-color dark:border-border-color-dark rounded-md hover:border-primary-color transition-colors"
+      className="flex h-10 w-10 items-center justify-center rounded-full border border-border-color text-text-heading transition-colors hover:border-primary-color hover:text-primary-color dark:border-border-color-dark dark:text-text-heading-dark"
       aria-label="Toggle theme"
     >
       {theme === "light" ? (
-        <BsFillMoonStarsFill size={18} className="text-text-heading" />
+        <BsFillMoonStarsFill size={16} />
       ) : (
-        <BsSunFill size={18} className="text-text-heading-dark" />
+        <BsSunFill size={16} />
       )}
     </button>
   );

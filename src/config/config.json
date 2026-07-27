@@ -4,12 +4,18 @@
     "copyright": "© CoderyStack | 2024",
     "logo": "/logo.svg",
     "logo_dark": "/logo_dark.svg",
-    "logo_width": "197",
-    "logo_height": "31",
+    "logo_width": "197px",
+    "logo_height": "31px",
     "logo_text": "Coderystack"
   },
   "settings": {
     "pagination": 6,
     "summary_length": 200
+  },
+  "social": {
+    "linkedin": "https://www.linkedin.com/in/yousrasaidani/",
+    "instagram": "https://www.instagram.com/coderystack/",
+    "twitter": "https://x.com/coderystack",
+    "github": "https://github.com/yousrasd"
   }
 }

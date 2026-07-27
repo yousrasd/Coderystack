@@ -4,14 +4,55 @@
 
 :root {
   --padding-main: 2rem;
-  
+  --color-primary: 95 112 89; /* #5F7059 dark sage — text, links, buttons */
+  --color-primary-light: 199 211 192; /* #C7D3C0 brand sage — badges, fills, surfaces */
+  --color-secondary: 201 79 124; /* #C94F7C pink — secondary info accents */
+  --color-secondary-light: 242 160 186; /* #F2A0BA */
 }
 
-//customize the default font used
+.dark {
+  --color-primary: 169 191 164; /* #A9BFA4 lighter sage for dark backgrounds */
+  --color-primary-light: 74 88 70; /* muted sage fill on dark backgrounds */
+  --color-secondary: 226 127 166; /* lighter pink for dark backgrounds */
+  --color-secondary-light: 201 79 124;
+}
+
 @layer base {
+  html {
+    text-rendering: optimizeLegibility;
+  }
+
   body {
     @apply text-text-heading dark:text-text-heading-dark;
+    background-image:
+      linear-gradient(rgba(23, 19, 15, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(23, 19, 15, 0.035) 1px, transparent 1px);
+    background-size: 42px 42px;
   }
+
+  .dark body {
+    background-image:
+      linear-gradient(rgba(245, 239, 231, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 239, 231, 0.035) 1px, transparent 1px);
+  }
+
+  ::selection {
+    @apply bg-primary-color-light text-text-heading;
+  }
+}
+
+.systems-map {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+.dark .systems-map {
+  background-image:
+    linear-gradient(rgba(23, 19, 15, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(23, 19, 15, 0.09) 1px, transparent 1px);
+  background-size: 26px 26px;
 }
 
 .p-main {
@@ -22,51 +63,95 @@
   padding: var(--padding-main);
 }
 
-.markdown > * {
-  all: revert;
-}
-
-.markdown p {
-  letter-spacing: 1.1px;
-}
-
 .markdown {
-  h1,h2 {
-    font-size: 1.5rem;
-    margin-top: 0;
-    margin-bottom: 0;
+  @apply text-lg leading-8 text-text-body dark:text-text-body-dark;
+
+  > * + * {
+    margin-top: 1.35rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-text-heading dark:text-text-heading-dark font-black leading-tight;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.65rem;
   }
 
   h3 {
-    margin-bottom: 0;
     font-size: 1.3rem;
   }
 
-  h4, h5, h6 {
-    margin-bottom: 0;
-    font-size: 1.2rem;
+  h4,
+  h5,
+  h6 {
+    font-size: 1.1rem;
+  }
+
+  p {
+    margin-top: 1.1rem;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.35rem;
+  }
+
+  li + li {
+    margin-top: 0.45rem;
+  }
+
+  blockquote {
+    @apply border-l-2 border-primary-color pl-5 text-text-heading dark:text-text-heading-dark;
+    font-style: italic;
+  }
+
+  code:not(pre code) {
+    @apply rounded bg-surface-muted px-1.5 py-0.5 text-sm text-text-heading dark:bg-surface-muted-dark dark:text-text-heading-dark;
+  }
+
+  pre {
+    @apply overflow-x-auto rounded-lg border border-border-color bg-surface-muted p-5 text-sm shadow-soft-line dark:border-border-color-dark dark:bg-surface-muted-dark;
+  }
+
+  img {
+    @apply mx-auto rounded-lg border border-border-color shadow-soft-line dark:border-border-color-dark;
+  }
+
+  hr {
+    @apply border-border-color dark:border-border-color-dark;
   }
 }
 
 .markdown a {
-  text-decoration: underline;
+  @apply text-primary-color underline underline-offset-4;
 }
 .markdown a:hover {
-  color: theme("colors.primary-color");
+  @apply text-text-heading dark:text-text-heading-dark;
 }
 
 .mainColor {
-  color: theme("colors.primary-color");
+  color: rgb(var(--color-primary));
 }
 
 .try-it-section {
-  background: linear-gradient(120deg, #f5f7fa, #c3cfe2); /* Soft gradient */
-  border-radius: 10px;
+  background: linear-gradient(120deg, #fbfaf7, #e6f2ee);
+  border: 1px solid theme("colors.border-color");
+  border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .try-it-section h4 {
-  font-family: 'Courier New', Courier, monospace; 
-  color: theme("colors.primary-color"); 
+  font-family: theme("fontFamily.mono");
+  color: rgb(var(--color-primary));
 }
-

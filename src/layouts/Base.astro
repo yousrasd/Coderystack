@@ -5,7 +5,7 @@ import { ClientRouter } from "astro:transitions";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer.astro";
 import GoogleAnalytics from "@/components/GoogleAnalytics.astro";
-import SpeedInsights  from "@vercel/speed-insights/astro"
+import SpeedInsights from "@vercel/speed-insights/astro";
 
 import "@/styles/main.scss";
 import config from "@/config/config.json";
@@ -26,10 +26,6 @@ const PUBLIC_GA_TRACKER_ID =
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
     <title>{config.site.title}</title>
     <ClientRouter />
 
@@ -39,7 +35,7 @@ const PUBLIC_GA_TRACKER_ID =
           src: [],
           name: "Lato",
           googleFontsURL:
-            "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap",
+            "https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400;1,700&display=swap",
           preload: true,
           display: "swap",
           selector: "body",
@@ -47,26 +43,26 @@ const PUBLIC_GA_TRACKER_ID =
         },
         {
           src: [],
-          name: "Raleway",
+          name: "IBM Plex Mono",
           googleFontsURL:
-            "https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap",
+            "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap",
           preload: true,
           display: "swap",
-          selector: "body",
-          fallback: "sans-serif",
+          selector: ".font-mono, code, pre",
+          fallback: "monospace",
         },
       ]}
     />
 
     <GoogleAnalytics measurementId={PUBLIC_GA_TRACKER_ID} />
   </head>
-  <body class="flex flex-col min-h-screen bg-bg-primary dark:bg-bg-primary-dark">
+  <body class="flex flex-col min-h-screen bg-bg-primary text-text-heading antialiased dark:bg-bg-primary-dark dark:text-text-heading-dark">
     <Header client:only="react" />
-    <main class="flex-grow px-5 md:px-12">
+    <main class="flex-grow">
       <slot />
     </main>
     <Footer />
-    <SpeedInsights/>
+    <SpeedInsights />
   </body>
   
   <script>
