@@ -42,7 +42,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-20 border-b border-border-color/80 bg-bg-primary/90 backdrop-blur dark:border-border-color-dark/80 dark:bg-bg-primary-dark/90">
-      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-between px-5 py-4 md:px-12">
+      <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between px-5 py-4 md:px-12">
         <div className="flex items-center gap-3">
           <Logo />
         </div>
