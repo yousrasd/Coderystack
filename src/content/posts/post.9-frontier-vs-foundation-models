@@ -1,0 +1,73 @@
+---
+title: "Foundation Models vs. Frontier Models: they are not the same"
+image: "/post/post8-fisky-supabase/slide-1.jpeg"
+authors: ["Yousra@Coderystack"]
+date: 2026-07-27T09:00:00Z
+description: "Describing the difference between two AI terms that are often used interchangeably, but aren't the same thing."
+tags: ["AI", "terminology"]
+type: "post"
+draft: false
+showInDevMode: false
+---
+
+
+Foundation model is NOT the same as frontier.
+
+
+The simplest way I think about the distinction is:
+
+**Foundation describes the role and general-purpose nature of a model. Frontier describes where a model sits relative to the current edge of AI capabilities.**
+
+
+## What is a foundation model?
+
+The term **foundation model** was introduced by researchers at Stanford in 2021.
+
+A foundation model is an AI model trained on broad data at scale that can then be adapted to many different downstream tasks.
+
+Instead of training a completely new model for every individual problem, developers can start from the same general model and use it for many applications.
+
+For example, a foundation model may support tasks such as:
+
+* text generation
+* summarization
+* translation
+* classification
+* coding
+* question answering
+
+Depending on the model, it may also work across other modalities such as images, audio, or video.
+
+This is where the word **foundation** comes from: the model acts as a foundation upon which many other AI systems and applications can be built.
+
+And an important distinction:
+
+**Foundation model does not mean LLM.**
+
+An LLM is a sbuset of foundation model centered on text. Foundation models are a broader concept and can operate across different modalities like image, audio, text.
+
+## What is a frontier model?
+
+Generally, the term refers to highly capable AI models that are **at or near the cutting edge of current AI capabilities**.
+
+
+A model might be considered frontier when it is released because it represents the current state of the art.
+
+As AI progresses and more capable models appear, that same model may eventually no longer be considered frontier.
+
+So unlike *foundation model*, frontier is not necessarily a permanent characteristic of a model.
+
+Some examples of frontier models today are OpenAI GPT series, Anthropic Claude
+
+
+
+In simple terms, here’s how i view both terms.
+
+**Foundation model: What kind of role can this model play?** It is broadly trained and adaptable enough to serve as the foundation for many downstream applications.
+
+**Frontier model: How advanced is this model compared with the current state of AI?** It sits at or near the leading edge of AI capabilities.
+
+This also means the two terms aren't mutually exclusive. A model can be **both a foundation model and a frontier model**.
+
+But a foundation model isn't automatically a frontier model.
+
