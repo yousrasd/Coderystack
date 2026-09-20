@@ -1,0 +1,104 @@
+---
+title: "Base, Chat and Reasoning Models: How Are They Different?"
+image: "/post/post10/post10-base-chat-reasoning.png"
+authors: ["Yousra@Coderystack"]
+date: 2026-09-21T09:00:00Z
+description: "Understanding three variants of models (base, chat and reasoning) and when to use each."
+tags: ["AI", "terminology", "models"]
+categories: ["AI", "terminology", "models"]
+type: "post"
+draft: false
+showInDevMode: false
+---
+
+When exploring large language models, you will often come across terms such as base model, chat model and reasoning model.
+
+
+These models are each useful, and describe different aspects of a model: how it was trained, how it behaves and how much computation it uses when producing an answer.
+
+Some newer models are also described as hybrid because they combine both direct conversaition capabilities with deep chain of thought processing.
+
+
+## What is a base model?
+
+A base model is the result of the initial pre-training stage.
+
+During pre-training, the model learns patterns from a very large collection of text and other data. Fundamentally, it learns to predict the next token in a sequence.
+
+
+A base model can:
+- complete text
+- recognize language patterns
+- generate content
+- serve as the starting point for additional training
+
+However, a base model has not necessarily been optimized to follow instructions or participate in natural conversations. When given a question, it might continue the text rather than answer the question directly.
+
+This makes base models valuable as starting checkpoints for researchers and organizations that want to create specialized models through fine-tuning, or other post-training techniques.
+
+In sum, using a base model saves an organization from having to pre-train a model from scratch. It does not necessarily remove the need for fine-tuning or other forms of adaptation.
+
+It is also important not to **confuse a base model with a foundation model**. 
+A foundation model describes a broadly capable model that has been designed and trained with specific goal of supporting multiple downstram applications and use cases. 
+In contrast, a base model refers more specifically to its initial pre-training stage before it has undergone instruction tuning or other task-specific post-training.
+
+## What is a chat model?
+
+A chat model is generally a base model that has undergone additional training to follow instructions and participate in conversations.
+
+Chat models are trained to understand structured messages involving roles such as: system, user, assistant
+
+Although the interface looks like a conversation, the underlying model is still processing and continuing a sequence of tokens. Special formatting and control tokens help it distinguish between the different participants in the conversation. 
+
+Chat models are suitable for applications such as:
+- customer-support assistants
+- coding assistants
+- conversational search
+
+A customer-support chatbot, for example, might combine a chat model with company documentation retrieved through RAG. The model provides the conversational ability, while the retrieval system supplies the company-specific knowledge.
+
+In summary, the chat model controls how the system interacts with the user, but it does not automatically contain the application’s private or up-to-date knowledge.
+
+
+## What is a reasoning model
+
+A reasoning model is optimized to use additional internal computation before producing its final answer. This allows the model to break down a problem, evaluate different approaches and work through tasks involving multiple steps.
+
+Reasoning models are particularly useful for:
+- complex coding problems
+- planning
+- detailed analysis
+ 
+For example, if you ask a chat model a straightforward factual question, it may produce an answer immediately. However, when given a more difficult problem, it can spend additional computation analyzing the problem before returning its response.
+
+Reasoning models use internal reasoning tokens to plan, inspect alternatives and solve harder multi-step tasks. This additional reasoning can improve performance on complex problems, but it may also increase response time and computational cost.
+
+
+
+A reasoning model can still be instruction-following and conversational. Therefore, chat model and reasoning model are not necessarily mutually exclusive categories. They could form a hybrid model.
+
+## What is a hybrid model
+A hybrid model can support both fast conversational responses and deeper reasoning within the same model or product.
+
+For a simple request, such as rewriting a sentence, the model may answer directly. For a more difficult request, such as analyzing a software architecture or solving a multi-step coding problem, it may apply more reasoning before responding.
+
+Depending on the model, this behaviour may be:
+- selected automatically based on the task
+- controlled through a reasoning or thinking mode
+- adjusted through a reasoning-effort setting
+- exposed as separate modes within the same 
+
+
+## Some final thoughts
+
+The distinction between base, chat and reasoning models is not simply about which model is more powerful. Each term describes a different behaviour or capability:
+- Base models provide the pretrained starting point
+- Chat models make interaction more natural and instruction-oriented
+- Reasoning models are designed for more complex, multi-step problems
+- Hybrid models attempt to balance conversational speed with deeper problem-solving abilities
+
+Understanding these distinctions makes it easier to evaluate models and choose the appropriate one for an application.
+
+The key is not always to select the most advanced model. It is to select the model whose behaviour, cost and capabilities best match the problem you are trying to solve.
+
+ 
